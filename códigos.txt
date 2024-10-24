@@ -1,0 +1,32 @@
+create database livraria;
+
+use livraria;
+
+drop database livraria;
+
+
+
+create table livros(
+id_livro int primary key auto_increment,
+
+nome varchar(30),
+lancamento int,
+
+preco double
+
+);
+
+insert into livros values(null,"Narnia", 2023 , 78.9); 
+insert into livros values(null,"Pequeno Principe", 1943 , 18.99);
+
+insert into livros values(null,"O culpa é das estrelas", 2012 , 30.99);
+insert into livros values(null,"Mobidick", 1851 , 20.00);
+
+insert into livros values(null,"O menino do pijama listrado", 2006 , 38.99);
+insert into livros values(null,"Diário de um banana", 2007 , 42.00);
+
+
+select * from livros;
+select nome,preco from livros where preco > 40;
+
+select nome,preco from livros where nome like 'N%';

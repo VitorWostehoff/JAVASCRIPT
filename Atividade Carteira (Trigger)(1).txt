@@ -1,0 +1,76 @@
+create database carteira;
+use carteira;
+
+drop database carteira;
+
+create table conta (
+	idconta int primary key auto_increment,
+	nomedotitular Varchar(30),
+	tipoconta Varchar(30),
+	valortotal float,
+	datacriacaoconta date
+);
+
+create table receita (
+	idreceita int primary key auto_increment,
+	valorreceita float,
+	datareceita date,
+	tiporeceita Varchar(30),
+	fkconta int,
+	foreign key (fkconta)
+	references conta (idconta)
+);
+
+create table despesa (
+	iddespesa int primary key auto_increment,
+	valordespesas float,
+	datadespesa date,
+	tipodespesa varchar(30),
+	fkconta int,
+	foreign key (fkconta)
+	references conta (idconta)
+);
+
+insert into conta values (null, "pedro gordo", "Corrente", 1000, '2000-12-12');
+
+delimiter $
+CREATE TRIGGER SOMASALDO AFTER INSERT ON receita
+FOR EACH ROW
+BEGIN
+
+DECLARE VALOR FLOAT;
+
+SET VALOR := NEW.valorreceita;
+
+UPDATE conta SET conta.valortotal = conta.valortotal + VALOR WHERE conta.idconta = NEW.fkconta;
+
+END
+$
+delimiter ;
+
+insert into receita values (null, 100.00, '2000-12-12', "corrente", 1);
+select * from receita;
+select * from conta;
+
+delimiter $
+CREATE TRIGGER SUBSALDO AFTER INSERT ON despesa
+FOR EACH ROW
+BEGIN
+
+DECLARE VALOR FLOAT;
+
+SET VALOR := NEW.valordespesas;
+
+UPDATE conta SET conta.valortotal = conta.valortotal - VALOR WHERE conta.idconta = NEW.fkconta;
+
+END
+$
+delimiter ;
+
+insert into receita values (null, 100.00, '2000-12-12', "corrente", 1);
+insert into despesa values (null, 100.00, '2000-12-12', "hhujb", 1);
+select * from receita;
+select * from conta;
+
+
+

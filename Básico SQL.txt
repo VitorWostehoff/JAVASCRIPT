@@ -1,0 +1,31 @@
+create database Biblioteca;
+
+use Biblioteca;
+
+
+
+create table livros(
+	
+idlivro int primary key auto_increment,
+	
+nome varchar(30),
+	
+preco double,
+	
+editora varchar(30)
+
+);
+
+
+
+create table autor(
+	
+idautor int primary key auto_increment,
+	
+nome varchar(30),
+	
+idade int,
+	
+peso double
+);	
+	
